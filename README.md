@@ -142,8 +142,6 @@ Validation
 kubectl get pods -n node-app
 kubectl get svc -n node-app
 
-<img width="1914" height="1077" alt="Screenshot from 2025-11-03 08-47-56" src="https://github.com/user-attachments/assets/dccdc5e2-2171-4081-89b8-16f118469da9" />
-
 
 
 
