@@ -1,37 +1,29 @@
-<img width="1914" height="1077" alt="Screenshot from 2025-11-03 08-47-56" src="https://github.com/user-attachments/assets/4d94ad18-5985-4699-8940-38655f60c1c5" /># 🚀 Node.js Microservices Deployment with Argo CD on Minikube
+# 🚀 Node.js Microservices Deployment with Argo CD on Minikube  
 
-A complete **DevOps hands-on project** demonstrating how to deploy a **Node.js + MongoDB microservices application** on **Kubernetes (Minikube)** using **Argo CD** for GitOps-based Continuous Delivery.
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=flat-square&logo=kubernetes&logoColor=white)
+![ArgoCD](https://img.shields.io/badge/Argo%20CD-FC6D26?style=flat-square&logo=argo&logoColor=white)
+![GitOps](https://img.shields.io/badge/GitOps-A42E2B?style=flat-square&logo=git&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white)
+![Minikube](https://img.shields.io/badge/Minikube-FFDD00?style=flat-square&logo=kubernetes&logoColor=black)
+![CI/CD](https://img.shields.io/badge/CI%2FCD-0066CC?style=flat-square&logo=jenkins&logoColor=white)
 
 ---
 
 ## 🧩 Project Overview
 
-This project showcases a simple **3-tier microservice architecture**:
+A complete **DevOps hands-on project** demonstrating how to deploy a **Node.js + MongoDB microservices application** on **Kubernetes (Minikube)** using **Argo CD** for **GitOps-based Continuous Delivery**.
 
-- **Frontend:** Node.js-based UI  
-- **Backend:** Node.js REST API  
-- **Database:** MongoDB  
-- **Deployment Environment:** Minikube Kubernetes Cluster  
-- **GitOps Tool:** Argo CD  
-
-All services are containerized using Docker, deployed to Kubernetes, and automatically synchronized via Argo CD.
+This project automates:
+- ✅ Continuous Delivery using **Argo CD**
+- 🐳 Containerization with **Docker**
+- ☸️ Orchestration via **Kubernetes**
+- 🔄 Real-time sync between **GitHub** and your cluster
 
 ---
 
-## ⚙️ Tech Stack
-
-| Tool/Technology | Purpose |
-|-----------------|----------|
-| **Node.js** | Frontend and backend microservices |
-| **MongoDB** | Database for storing user data |
-| **Docker** | Containerization of services |
-| **Kubernetes (Minikube)** | Local orchestration platform |
-| **Argo CD** | GitOps-based continuous delivery |
-| **GitHub** | Version control for manifests & source code |
-
----
-
-## 🧱 Architecture
+## 🧱 Architecture Diagram
 
       ┌────────────┐        ┌────────────┐        ┌────────────┐
       │ Frontend   │ <----> │ Backend    │ <----> │ MongoDB    │
@@ -45,7 +37,21 @@ All services are containerized using Docker, deployed to Kubernetes, and automat
 
 ---
 
+## ⚙️ Tech Stack
+
+| Tool/Technology | Purpose |
+|-----------------|----------|
+| **Node.js** | Frontend & backend microservices |
+| **MongoDB** | Database for storing data |
+| **Docker** | Containerization |
+| **Kubernetes (Minikube)** | Local cluster environment |
+| **Argo CD** | GitOps-based continuous delivery |
+| **GitHub** | Version control for manifests & code |
+
+---
+
 ## 📂 Project Structure
+
 node-microservices-argocd/
 │
 ├── frontend/
@@ -67,6 +73,7 @@ node-microservices-argocd/
 │
 └── README.md
 
+
 ---
 
 ## 🐳 Step 1: Build and Push Docker Images
@@ -82,7 +89,7 @@ cd ../backend
 docker build -t <your-dockerhub-username>/backend:latest .
 docker push <your-dockerhub-username>/backend:latest
 
-## Step 2: Deploy to Kubernetes (Minikube)
+## 🐳 Step 2: Deploy to Kubernetes (Minikube)
 
 # Start Minikube
 minikube start
@@ -95,55 +102,32 @@ kubectl apply -f manifests/mongo-deployment.yaml -n node-app
 kubectl apply -f manifests/backend-deployment.yaml -n node-app
 kubectl apply -f manifests/frontend-deployment.yaml -n node-app
 
-# Verify pods
+# Verify pods and services
 kubectl get pods -n node-app
-
-# Verify services
 kubectl get svc -n node-app
 
-Example Output:
-NAME                        READY   STATUS    RESTARTS   AGE
-backend-54df7c47b4-brrks    1/1     Running   0          2m
-frontend-6654688b54-c9nb5   1/1     Running   0          2m
-mongo-85d555b746-bz4r7      1/1     Running   0          2m
+Step 3: Access the Application
 
-Step 3: Access Application
 minikube ip
-http://<minikube-ip>:30001
 
-Step 3: Setup Argo CD
+Step 4: Set Up Argo CD
 
-# Create namespace
+# Create Argo CD namespace
 kubectl create namespace argocd
 
 # Install Argo CD
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
-# Forward Argo CD service
+# Port-forward Argo CD UI
 kubectl port-forward svc/argocd-server -n argocd 8080:443
 
+Access Argo CD at:
 https://localhost:8080
 
-Get admin password:
+Login credentials:
+# Get admin password
 kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d
 
-Login with:
 
-Username: admin
-
-Password: (above output)
-
-# Argo CD Application (GitOps)
-
-Apply your Argo CD app manifest:
-
-Validation
-
-kubectl get pods -n node-app
-kubectl get svc -n node-app
-<img width="1914" height="1077" alt="Screenshot from 2025-11-03 08-45-13" src="https://github.com/user-attachments/assets/d763dcc3-81b9-4245-8899-911a9f0317b3" />
-
-
-
-
+<img width="1914" height="1077" alt="Screenshot from 2025-11-03 08-45-13" src="https://github.com/user-attachments/assets/fc005bc6-0736-46d7-a5f8-82cd1460c7e0" />
 
